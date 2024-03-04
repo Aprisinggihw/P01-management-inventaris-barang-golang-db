@@ -29,17 +29,21 @@ func displayAllDataFromDatabase() {
 	fmt.Println("--------------------------------------------")
 }
 
-func insertData(id int, name string, stok int) {
+func insertData(name string, stok int) {
 	db := GetConnection()
 	defer db.Close()
 
 	ctx := context.Background()
-	script := "INSERT INTO barang(id, name, stok) VALUES(?,?,?)"
-	_, err := db.ExecContext(ctx, script, id, name, stok)
+	script := "INSERT INTO barang(name, stok) VALUES(?,?)"
+	result, err := db.ExecContext(ctx, script, name, stok)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Succes Insert Barang")
+	insertId , err := result.LastInsertId()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Succes Insert Barang (id: %d)\n", insertId)
 }
 
 func updateStok(stok, id int) {
@@ -86,8 +90,8 @@ func GetDisplayAllDataFromDatabase() {
 	displayAllDataFromDatabase()
 }
 
-func SetInsertData(id int, name string, stok int){
-	insertData(id, name, stok)
+func SetInsertData( name string, stok int){
+	insertData(name, stok)
 }
 
 func SetUpdateData(stok, id int){

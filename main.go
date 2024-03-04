@@ -34,8 +34,6 @@ func main() {
 		case 2:
 			fmt.Println("\n\n========================================")
 			fmt.Println("\tTAMBAH DATA BARANG")
-			fmt.Print("id: ")
-			fmt.Scanln(&newId)
 			fmt.Print("nama: ")
 			newName, err := input.ReadString('\n') //dibaca sampai newline
 			if err != nil {
@@ -45,7 +43,7 @@ func main() {
 			fmt.Print("stok: ")
 			fmt.Scanln(&newStok)
 			fmt.Print("========================================\n\n\n")
-			database.SetInsertData(newId, newName, newStok)
+			database.SetInsertData(newName, newStok)
 		case 3:
 			var deleteById string
 			fmt.Println("\n\n---------------------------------")
